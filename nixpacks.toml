@@ -1,0 +1,7 @@
+[phases.build]
+cmds = [
+  "dotnet publish DevFastTrack.API/DevFastTrack.API.csproj -c Release -o /app/publish"
+]
+
+[start]
+cmd = "dotnet /app/publish/DevFastTrack.API.dll"
