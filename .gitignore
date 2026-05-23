@@ -1,0 +1,17 @@
+## .NET Core
+bin/
+obj/
+*.user
+*.suo
+.vs/
+
+## Secrets — never commit these
+appsettings.Production.json
+appsettings.Development.json
+
+## Local DB
+*.mdf
+*.ldf
+
+## Build output
+publish/
