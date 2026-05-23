@@ -65,8 +65,20 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await context.Database.MigrateAsync();   // runs pending migrations automatically
-    await DbSeeder.SeedAsync(context);
+    try
+    {
+        Console.WriteLine("🔄 Running database migrations...");
+        await context.Database.MigrateAsync();
+        Console.WriteLine("✅ Migrations applied successfully.");
+        await DbSeeder.SeedAsync(context);
+        Console.WriteLine("✅ Database seeded.");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"❌ Database startup error: {ex.Message}");
+        Console.WriteLine("Check your ConnectionStrings__DefaultConnection environment variable.");
+        throw; // re-throw so Railway marks deployment as failed
+    }
 }
 
 // Register Exception Middleware
